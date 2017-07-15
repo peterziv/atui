@@ -1,14 +1,14 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * ATUI
+ * @author Peter (peter.ziv@hotmail.com)
+ * @date July 15, 2017
+ * @version 1.0.0
  */
 
-
 namespace ZKit\ATUI {
-    require_once __DIR__ . '/basic/Log.console.php';
+    require_once __DIR__ . '/utility/Log.php';
 
     /**
      * Description of HandleJUnit
@@ -20,7 +20,7 @@ namespace ZKit\ATUI {
 
         public function check($resultFile)
         {
-            $log = new \ZKit\Console\LogConsole;
+            $log = new \ZKit\console\utility\LogConsole;
             $log->debug('Found a file: ' . $resultFile);
 
             $reader = new \XMLReader();

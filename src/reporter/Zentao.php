@@ -1,4 +1,10 @@
 <?php
+/**
+ * ATUI
+ * @author Peter (peter.ziv@hotmail.com)
+ * @date July 15, 2017
+ * @version 1.0.0
+ */
 
 namespace ZKit\ATUI {
 
@@ -39,6 +45,13 @@ namespace ZKit\ATUI {
         }
 
         private function bug($sid, $data)
+        {
+            $product = $data['product'];
+            $this->client->post($this->domain . '/index.php?m=bug&f=create&t=json&productID=' .
+                $product . '&' . $sid, $data);
+        }
+
+        private function findBugByTitle($title)
         {
             $product = $data['product'];
             $this->client->post($this->domain . '/index.php?m=bug&f=create&t=json&productID=' .

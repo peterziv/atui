@@ -1,11 +1,13 @@
 <?php
 /**
- * ZKit.Console
+ * ZKit Utility Tool - Log
  * @author Peter (peter.ziv@hotmail.com)
- *
+ * @date Oct 12, 2016
+ * @version 1.1.1
  */
-namespace ZKit\Console{
-    require_once __DIR__ . '/Log.console.php';
+
+namespace ZKit\console\utility {
+    require_once __DIR__ . '/Log.php';
 
     /**
      * It is to find the sub directionary and file under one specified path.

@@ -1,0 +1,20 @@
+{
+    "author": {
+        "name": "peter",
+        "mail": "peter.ziv@hotmail.com",
+        "license": "Apache License 2.0"
+    },
+    "junit": "target/surefire-reports",
+    "tracker": {
+        "name": "ZenTao",
+        "domain": "http://127.0.0.1/pms",
+        "user": "admin",
+        "password": "ZenTaoPMS",
+        "bug": {
+            "product": 1,
+            "openedBuild": "trunk",
+            "type": "automation",
+            "severity": 3
+        }
+    }
+}

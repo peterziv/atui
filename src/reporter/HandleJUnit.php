@@ -1,30 +1,25 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of HandleJUnit
- *
- * @author admin
+ * ATUI
+ * @author Peter (peter.ziv@hotmail.com)
+ * @date July 15, 2017
+ * @version 1.0.0
  */
 namespace ZKit\ATUI {
-    require_once __DIR__ . '/basic/Dir.console.php';
+    require_once __DIR__ . '/utility/Dir.php';
     require_once __DIR__ . '/Loader.php';
     require_once __DIR__ . '/JUnitParser.php';
     require_once __DIR__ . '/Zentao.php';
 
-    class HandleJUnit extends \ZKit\Console\Dir
+    class HandleJUnit extends \ZKit\console\utility\Dir
     {
 
         private $loader = array();
 
         public function __construct()
         {
-            $this->log = new \ZKit\Console\LogConsole;
+            $this->log = new \ZKit\console\utility\LogConsole;
             $this->initState = $this->init();
         }
 

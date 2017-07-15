@@ -1,6 +1,12 @@
 <?php
+/**
+ * ZKit Utility Tool - Log
+ * @author Peter (peter.ziv@hotmail.com)
+ * @date July 15, 2017
+ * @version 1.1.1
+ */
 
-namespace ZKit\Console {
+namespace ZKit\console\utility {
 
     class HttpClient
     {
@@ -35,7 +41,7 @@ namespace ZKit\Console {
         public function parse($output, $key = 'data')
         {
             $dataInit = json_decode($output, true);
-            if (array_key_exists('status', $dataInit) && 'success' == $dataInit['status']) {
+            if (is_array($dataInit) && array_key_exists('status', $dataInit) && 'success' == $dataInit['status']) {
                 return json_decode($dataInit[$key], true);
             }
             return null;
@@ -44,7 +50,7 @@ namespace ZKit\Console {
         public function isOK($output)
         {
             $dataInit = json_decode($output, true);
-            if (array_key_exists('status', $dataInit) && 'success' == $dataInit['status']) {
+            if (is_array($dataInit) && array_key_exists('status', $dataInit) && 'success' == $dataInit['status']) {
                 return true;
             }
             return false;
