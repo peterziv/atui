@@ -27,11 +27,23 @@ namespace ZKit\console\utility {
     class LogConsole extends LogBasic
     {
 
+        protected static $_instance = null;
+
         protected function log($type, $log)
         {
             $info = parent::log($type, $log);
             echo $info . PHP_EOL;
         }
+
+        public static function getInstance()
+        {
+            if (!isset(self::$_instance)) {
+                self::$_instance = new LogConsole();
+            }
+
+            return self::$_instance;
+        }
+
     }
 
     /**
@@ -41,29 +53,18 @@ namespace ZKit\console\utility {
     class LogBasic
     {
 
-        protected static $_instance = null;
         protected $isDateShow = true;
-
 
         public function setDateShow($isDateShow = true)
         {
             $this->isDateShow = $isDateShow;
         }
 
-        public static function getInstance($calledClass = '')
-        {
-            if (!isset(self::$_instance)) {
-                self::$_instance = new $calledClass;
-            }
-
-            return self::$_instance;
-        }
-
         protected function log($type, $log)
         {
             $info = "";
             if ($this->isDateShow){
-                $info = date('Y-m-d h:i:s');
+                $info = date('Y-m-d H:i:s');
             }
             if (is_string($log)) {
                 $info .= $type . ' ' . $log;
