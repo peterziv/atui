@@ -15,10 +15,12 @@ namespace ZKit\ATUI {
         public $url = null;
         public $domain = null;
         protected $client = null;
+        protected $log = null;
 
         public function __construct()
         {
             $this->client = new \ZKit\console\utility\HttpClient;
+            $this->log = \ZKit\console\utility\LogConsole::getInstance();
         }
 
         public abstract function report($data = array());

@@ -25,7 +25,7 @@ namespace ZKit\console\utility {
          */
         public function __construct($root) {
             $this->rootPath = $root;
-            $this->log = new LogConsole;
+            $this->log = LogConsole::getInstance();
             $this->initState = $this->init();
         }
 

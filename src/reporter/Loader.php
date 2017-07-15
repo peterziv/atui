@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * ATUI
+ * @author Peter (peter.ziv@hotmail.com)
+ * @date July 15, 2017
+ * @version 1.0.0
+ */
+
 namespace ZKit\ATUI {
 
     class Loader
@@ -26,7 +34,12 @@ namespace ZKit\ATUI {
             return $rs;
         }
 
-        public function initTracker($data = array())
+        /**
+         * initialize the tracker based on configuration file.
+         * @param array $data
+         * @return boolean return the state to initialize bug tracker.
+         */
+        private function initTracker($data = array())
         {
             $rs = false;
             if ('ZenTao' == $data['name']) {
@@ -40,7 +53,7 @@ namespace ZKit\ATUI {
             return $rs;
         }
 
-        private function initBug($data)
+        private function initBug($data = array())
         {
             if (array_key_exists('bug', $data)) {
                 $this->bug = $data['bug'];

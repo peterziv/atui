@@ -7,6 +7,7 @@
  */
 
 namespace ZKit\console\utility {
+    require_once __DIR__ . '/Log.php';
 
     class HttpClient
     {
