@@ -11,16 +11,14 @@ namespace ZKit\ATUI {
     require_once __DIR__ . '/utility/Log.php';
 
     /**
-     * Description of HandleJUnit
-     *
-     * @author admin
+     * It is one log parser for JUnit format report
      */
     class JUnitParser
     {
 
-        public function check($resultFile)
+        public function parse($resultFile)
         {
-            $log = new \ZKit\console\utility\LogConsole;
+            $log = \ZKit\console\utility\LogConsole::getInstance();
             $log->debug('Found a file: ' . $resultFile);
 
             $reader = new \XMLReader();
@@ -34,7 +32,6 @@ namespace ZKit\ATUI {
                 $className = $reader->getAttribute('classname');
                 while ($reader->read()) {
                     if ($reader->name == "failure" && $reader->nodeType == \XMLReader::ELEMENT) {
-//                        $type = $reader->getAttribute('type');
                         $data = $className . '.' . $function . '-' . $reader->getAttribute('message');
                         $log->info($data);
                     }

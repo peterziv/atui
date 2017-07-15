@@ -47,7 +47,7 @@ namespace ZKit\ATUI {
         private function report($file)
         {
             $p = new JUnitParser;
-            $rs = $p->check($file);
+            $rs = $p->parse($file);
             if (!is_null($rs)) {
                 $result = $this->loader->bug;
                 $result['title'] = $rs;
