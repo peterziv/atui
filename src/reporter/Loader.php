@@ -21,6 +21,9 @@ namespace ZKit\ATUI {
             $rs = false;
             do {
                 $string = file_get_contents('config.json');
+                if (false === $string) {
+                    break;
+                }
                 $data = json_decode($string, true);
                 if (is_null($data)) {
                     break;
@@ -42,22 +45,48 @@ namespace ZKit\ATUI {
         private function initTracker($data = array())
         {
             $rs = false;
-            if ('ZenTao' == $data['name']) {
-                $this->tracker = new Zentao;
-                $this->tracker->domain = $data['domain'];
-                $this->tracker->user = $data['user'];
-                $this->tracker->pwd = $data['password'];
-                $rs = true;
+            do {
+                if (!array_key_exists('name', $data)) {
+                    break;
+                }
+
+                if ($this->newTracker($data['name'])) {
+                    $this->tracker->domain = $data['domain'];
+                    $this->tracker->user = $data['user'];
+                    $this->tracker->pwd = $data['password'];
+                    $rs = $this->initBug($data);
+                }
+            } while (false);
+            return $rs;
+        }
+
+        /**
+         * new one tracker based on its name
+         * @param string $name tracker name
+         * @return boolean it is true if it is supported, others are false.
+         */
+        private function newTracker($name)
+        {
+            $rs = true;
+            switch ($name) {
+                case 'ZenTao':
+                    $this->tracker = new Zentao;
+                    break;
+                default:
+                    $rs = false;
+                    break;
             }
-            $this->initBug($data);
             return $rs;
         }
 
         private function initBug($data = array())
         {
+            $rs = false;
             if (array_key_exists('bug', $data)) {
                 $this->bug = $data['bug'];
+                $rs = true;
             }
+            return $rs;
         }
 
         private function initJUnitReport($path)
