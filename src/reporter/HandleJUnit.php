@@ -17,23 +17,38 @@ namespace ZKit\ATUI {
 
         private $loader = array();
 
-        public function __construct()
-        {
-            $this->log = new \ZKit\console\utility\LogConsole;
-            $this->initState = $this->init();
-        }
-
         protected function init()
         {
-            $res = true;
-            $this->loader = new Loader();
-            if (!$this->loader->init()) {
-                $this->log->error('Failed to init the bug tracker!');
-                $res = false;
-            } else {
-                $this->rootPath = $this->loader->junit;
-            }
+            $res = false;
+
+            do {
+                if (!$this->extensionRequired()) {
+                    break;
+                }
+
+                $this->loader = new Loader();
+                if (!$this->loader->init()) {
+                    $this->log->error('Failed to init the bug tracker!');
+                } else {
+                    $this->rootPath = $this->loader->junit;
+                    $res = true;
+                }
+            } while (false);
             return $res;
+        }
+
+        private function extensionRequired()
+        {
+            $rs = true;
+            $list = array('curl');
+            foreach ($list as $ext) {
+                if (!extension_loaded($ext)) {
+                    $this->log->error('php extension ' . $ext . ' is not load!');
+                    $rs = false;
+                    break;
+                }
+            }
+            return $rs;
         }
 
         public function doWhenFoundFile($preFixPath, $fileName)

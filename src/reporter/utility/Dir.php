@@ -15,7 +15,7 @@ namespace ZKit\console\utility {
      *
      */
     class Dir {
-        protected $rootPath = null;
+        public $rootPath = null;
         protected $log = null;
         protected $initState = true;
 
@@ -23,8 +23,8 @@ namespace ZKit\console\utility {
          * New the class with parmeter: $root
          * @param string $root
          */
-        public function __construct($root) {
-            $this->rootPath = $root;
+        public function __construct()
+        {
             $this->log = LogConsole::getInstance();
             $this->initState = $this->init();
         }
