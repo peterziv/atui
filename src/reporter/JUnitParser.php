@@ -35,6 +35,7 @@ namespace ZKit\ATUI {
                 }
 
                 $this->findIssue($reader, $data, $step);
+
                 if (REPORT_PARSER_DONE === $step) {
                     $log->info('Found an issue in ' . $resultFile);
                     break;
@@ -58,13 +59,13 @@ namespace ZKit\ATUI {
                     $data['class'] = $reader->getAttribute('classname');
                     $data['function'] = $reader->getAttribute('name');
                     break;
-                case 'failure':
                 case 'error':
+                    $data['steps'] = $reader->getAttribute('message');
+                case 'failure':
                     if (REPORT_PARSER_TESTCASE_FOUND === $step) {
                         $msg = $reader->getAttribute('message');
                         $pos = strpos($msg, '(Session');
                         $data['msg'] = (false === $pos ? $msg : preg_replace("/([\s]{2,})/", '', substr($msg, 0, $pos)));
-
                         $step = REPORT_PARSER_DONE;
                     }
                     break;
