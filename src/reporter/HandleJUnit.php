@@ -66,7 +66,7 @@ namespace ZKit\ATUI {
             if (array_key_exists('msg', $rs)) {
                 $result = $this->loader->bug;
 
-                $result['title'] = $rs['class'] . '.' . $rs['function'] . '-' . $rs['msg'];
+                $result['title'] = $rs['type'] . ':' . $rs['class'] . '.' . $rs['function'] . '-' . $rs['msg'];
                 $this->log->info($result['title']);
                 if (array_key_exists('steps', $rs)) {
                     $result['steps'] = $rs['steps'];
