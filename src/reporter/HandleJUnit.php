@@ -63,9 +63,11 @@ namespace ZKit\ATUI {
         {
             $p = new JUnitParser;
             $rs = $p->parse($file);
-            if (!is_null($rs)) {
+            if (array_key_exists('msg', $rs)) {
                 $result = $this->loader->bug;
-                $result['title'] = $rs;
+
+                $result['title'] = $rs['class'] . '.' . $rs['function'] . '-' . $rs['msg'];
+                $this->log->info($result['title']);
                 $this->bug($result);
             }
         }
