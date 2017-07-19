@@ -67,7 +67,7 @@ namespace ZKit\console\utility {
                 $info = date('Y-m-d H:i:s');
             }
             if (is_string($log)) {
-                $info .= $type . ' ' . $log;
+                $info .= empty($type) ? $log : $type . ' ' . $log;
             } else {
                 $log[] = $type;
                 var_dump($log);
@@ -75,26 +75,31 @@ namespace ZKit\console\utility {
             return $info;
         }
 
-        public function info($log, $flag = '[INFO]')
+        public function write($log = '')
         {
-            $this->log($flag, $log);
+            $this->log(null, $log);
+        }
+
+        public function info($log)
+        {
+            $this->log('[INFO]', $log);
         }
 
         public function debug($log)
         {
             if (defined('APP_DEBUG')) {
-                $this->log("[DEBUG]", $log);
+                $this->log('[DEBUG]', $log);
             }
         }
 
         public function error($log)
         {
-            $this->log("[ERROR]", $log);
+            $this->log('[ERROR]', $log);
         }
 
         public function warning($log)
         {
-            $this->log("[WARNING]", $log);
+            $this->log('[WARNING]', $log);
         }
     }
 }
