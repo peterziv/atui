@@ -45,6 +45,15 @@ namespace ZKit\ATUI {
             return $data;
         }
 
+        private function findDescription($reader, &$data)
+        {
+            if ($reader->read()) {
+                if ($reader->nodeType === \XMLReader::CDATA || $reader->nodeType === \XMLReader::TEXT) {
+                    $data['steps'] = $reader->value;
+                }
+            }
+        }
+
         /**
          * find issue taged as failure and error under parent tag testcase
          * @param XMLReader $reader
@@ -60,12 +69,13 @@ namespace ZKit\ATUI {
                     $data['function'] = $reader->getAttribute('name');
                     break;
                 case 'error':
-                    $data['steps'] = $reader->getAttribute('message');
                 case 'failure':
                     if (REPORT_PARSER_TESTCASE_FOUND === $step) {
+                        $data['type'] = $reader->name;
                         $msg = $reader->getAttribute('message');
                         $pos = strpos($msg, '(Session');
                         $data['msg'] = (false === $pos ? $msg : preg_replace("/([\s]{2,})/", '', substr($msg, 0, $pos)));
+                        $this->findDescription($reader, $data);
                         $step = REPORT_PARSER_DONE;
                     }
                     break;
