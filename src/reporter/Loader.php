@@ -9,31 +9,77 @@
 
 namespace ZKit\ATUI {
 
+    /**
+     * This class is to load the configuration.
+     */
     class Loader
     {
 
         public $bug = null;
         public $tracker = null;
         public $junit = '.';
+        private $log = null;
 
         public function init()
         {
             $rs = false;
             do {
-                $string = file_get_contents('config.json');
+                $this->log = new \ZKit\console\utility\LogConsole();
+                $string = $this->openConf();
                 if (false === $string) {
                     break;
                 }
                 $data = json_decode($string, true);
                 if (is_null($data)) {
+                    $this->log->error('Error configuration file format.');
                     break;
                 }
                 if (!$this->initTracker($data['tracker'])) {
+                    $this->log->error('Failed to init the bug tracker!');
                     break;
                 }
                 $this->initJUnitReport($data['junit']);
                 $rs = true;
             }while (false);
+            return $rs;
+        }
+
+        /**
+         * get configuration file path
+         * @return boolean|string it will return the configuration file path string, false when it is not existing
+         */
+        private function getConf()
+        {
+            $conf = getcwd() . DIRECTORY_SEPARATOR . 'config.json';
+            if (!file_exists($conf)) {
+                $conf = getenv('USERPROFILE') . DIRECTORY_SEPARATOR . $conf;
+            }
+            if (!file_exists($conf)) {
+                $this->log->error('Please check the configuration file: ' . $conf);
+                return false;
+            }
+
+            return $conf;
+        }
+
+        /**
+         * get content of configuration file
+         * @return boolean|string it will return the configuration file content string, false when it is failed to get the content.
+         */
+        private function openConf()
+        {
+            $rs = false;
+            do {
+                $conf = $this->getConf();
+                if (false === $conf) {
+                    break;
+                }
+                $rs = file_get_contents($conf);
+                if (false === $rs) {
+                    $this->log->error('Error configuration file: ' . $conf);
+                    break;
+                }
+            } while (false);
             return $rs;
         }
 

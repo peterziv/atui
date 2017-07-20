@@ -27,9 +27,7 @@ namespace ZKit\ATUI {
                 }
 
                 $this->loader = new Loader();
-                if (!$this->loader->init()) {
-                    $this->log->error('Failed to init the bug tracker!');
-                } else {
+                if ($this->loader->init()) {
                     $this->rootPath = $this->loader->junit;
                     $res = true;
                 }
