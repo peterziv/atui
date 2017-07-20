@@ -68,7 +68,7 @@ namespace ZKit\ATUI {
                 $this->log->info($result['title']);
                 if (array_key_exists('steps', $rs)) {
                     $result['steps'] = $rs['steps'];
-                    $this->log->info($result['steps']);
+                    $this->log->debug($result['steps']);
                 }
                 $this->bug($result);
             }
