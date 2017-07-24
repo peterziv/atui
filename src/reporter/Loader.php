@@ -19,6 +19,7 @@ namespace ZKit\ATUI {
         public $tracker = null;
         public $junit = '.';
         private $log = null;
+        private $confName = 'config.json';
 
         public function init()
         {
@@ -50,9 +51,9 @@ namespace ZKit\ATUI {
          */
         private function getConf()
         {
-            $conf = getcwd() . DIRECTORY_SEPARATOR . 'config.json';
+            $conf = getcwd() . DIRECTORY_SEPARATOR . $this->confName;
             if (!file_exists($conf)) {
-                $conf = getenv('USERPROFILE') . DIRECTORY_SEPARATOR . $conf;
+                $conf = getenv('USERPROFILE') . DIRECTORY_SEPARATOR . $this->confName;
             }
             if (!file_exists($conf)) {
                 $this->log->error('Please check the configuration file: ' . $conf);
