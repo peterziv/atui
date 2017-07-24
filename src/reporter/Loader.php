@@ -9,6 +9,7 @@
 
 namespace ZKit\ATUI {
     require_once __DIR__ . '/utility/Log.php';
+    require_once __DIR__ . '/Zentao.php';
 
     /**
      * This class is to load the configuration.
