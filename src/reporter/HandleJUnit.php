@@ -15,7 +15,8 @@ namespace ZKit\ATUI {
     class HandleJUnit extends \ZKit\console\utility\Dir
     {
 
-        private $loader = array();
+        private $loader = null;
+        private $issueCnt = 0;
 
         protected function init()
         {
@@ -29,6 +30,7 @@ namespace ZKit\ATUI {
                 $this->loader = new Loader();
                 if ($this->loader->init()) {
                     $this->rootPath = $this->loader->junit;
+                    $this->log->info('Report according to result in ' . $this->rootPath);
                     $res = true;
                 }
             } while (false);
@@ -49,11 +51,26 @@ namespace ZKit\ATUI {
             return $rs;
         }
 
-        public function doWhenFoundFile($preFixPath, $fileName)
+        /**
+         * get the count number of issue
+         * @return int return the count number of issue
+         */
+        public function getIusseCount()
+        {
+            return $this->issueCnt;
+        }
+
+        /**
+         * The action to handle files
+         * @param string $prefixPath The prefix path
+         * @param string $fileName  The file name found
+         */
+        public function doWhenFoundFile($prefixPath, $fileName)
         {
             $fileType = substr($fileName, -4);
             if ('.xml' === $fileType) {
-                $this->report($this->rootPath . $preFixPath . '/' . $fileName);
+                $this->log->info('Try to finger out issue by ' . $fileName);
+                $this->report($this->rootPath . $prefixPath . '/' . $fileName);
             }
         }
 
@@ -78,6 +95,7 @@ namespace ZKit\ATUI {
         {
             $bms = $this->loader->tracker;
             $bms->report($data);
+            $this->issueCnt++;
         }
 
     }
