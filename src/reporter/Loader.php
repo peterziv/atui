@@ -8,6 +8,7 @@
  */
 
 namespace ZKit\ATUI {
+    require_once __DIR__ . '/utility/Log.php';
 
     /**
      * This class is to load the configuration.
@@ -21,6 +22,10 @@ namespace ZKit\ATUI {
         private $log = null;
         private $confName = 'config.json';
 
+        /**
+         * init the configuration
+         * @return boolean return the state to init the configuration, true is sccuess.
+         */
         public function init()
         {
             $rs = false;
