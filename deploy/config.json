@@ -1,7 +1,12 @@
 {
-    "author": {
-        "name": "peter",
-        "mail": "peter.ziv@hotmail.com",
+    "ATUI": {
+        "Reporter": {
+            "version": "1.0.0"
+        },
+        "author": {
+            "name": "peter",
+            "mail": "peter.ziv@hotmail.com"
+        },
         "license": "Apache License 2.0"
     },
     "junit": "target/surefire-reports",
