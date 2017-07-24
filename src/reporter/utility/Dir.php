@@ -62,22 +62,22 @@ namespace ZKit\console\utility {
 
         /**
          * Need to rewrite this function.
-         * @param string $preFixPath 路径前缀
+         * @param string $prefixPath 路径前缀
          * @param string $dirName  文件夹名
          */
-        public function doWhenFoundDirectory($preFixPath, $dirName)
+        public function doWhenFoundDirectory($prefixPath, $dirName)
         {
-            $this->log->debug( 'Found a directory '.$preFixPath. "/".$dirName );
+            $this->log->debug('Found a directory ' . $prefixPath . "/" . $dirName);
         }
 
         /**
          * Need to rewrite this function.
-         * @param string $preFixPath
-         * @param string $fileName
+         * @param string $prefixPath 路径前缀
+         * @param string $fileName 文件夹名
          */
-        public function doWhenFoundFile($preFixPath, $fileName)
+        public function doWhenFoundFile($prefixPath, $fileName)
         {
-            $this->log->debug( 'Found a file: '.$preFixPath."/". $fileName );
+            $this->log->debug('Found a file: ' . $prefixPath . "/" . $fileName);
         }
     }
 
