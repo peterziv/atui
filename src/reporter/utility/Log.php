@@ -75,7 +75,7 @@ namespace ZKit\console\utility {
             return $info;
         }
 
-        public function write($log = '')
+        public function println($log = '')
         {
             $this->log(null, $log);
         }
