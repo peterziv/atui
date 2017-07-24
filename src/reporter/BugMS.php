@@ -12,7 +12,6 @@ namespace ZKit\ATUI {
     abstract class BugMS
     {
 
-        public $url = null;
         public $domain = null;
         protected $client = null;
         protected $log = null;
