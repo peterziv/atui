@@ -48,7 +48,7 @@ namespace ZKit\ATUI {
         {
             $bug = $this->findBugByTitle($sid, $data);
             if (!is_null($bug)) {
-                $bug['steps'] .= '<p>' . date('Y-m-d H:i:s') . ' Reported the same bug via ATUI</p>';
+                $bug['steps'] .= '<p>' . date('Y-m-d H:i:s') . ' Reported the same bug by ATUI</p>';
                 $this->editBug($sid, $bug);
             } else {
                 $this->createBug($sid, $data);
@@ -58,8 +58,8 @@ namespace ZKit\ATUI {
         private function createBug($sid, $data)
         {
             $this->log->info('Report the bug!');
-            $data['steps'] = (array_key_exists('steps', $data)) ? '<p>' . $data['steps'] . '</p>' : '';
-            $data['steps'] .= '<p>' . date('Y-m-d H:i:s') . ' Reported the bug via ATUI</p>';
+            $data['steps'] = !empty($data['steps']) ? '<p>' . $data['steps'] . '</p>' : '';
+            $data['steps'] .= '<p>' . date('Y-m-d H:i:s') . ' Reported the bug by ATUI</p>';
             $this->log->info($data['steps']);
             $this->client->post($this->domain . '/index.php?m=bug&f=create&t=json&productID=' .
                 $data['product'] . '&' . $sid, $data);

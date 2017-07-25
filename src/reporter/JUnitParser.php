@@ -9,6 +9,7 @@
 
 namespace ZKit\ATUI {
     require_once __DIR__ . '/utility/Log.php';
+    require_once __DIR__ . '/Parser.php';
 
     define('REPORT_PARSER_START', 0);
     define('REPORT_PARSER_TESTCASE_FOUND', 1);
@@ -17,32 +18,21 @@ namespace ZKit\ATUI {
     /**
      * It is one log parser for JUnit format report
      */
-    class JUnitParser
+    class JUnitParser extends Parser
     {
 
         /**
          * parse the result file for issues.
          * @param string $resultFile the file with path
-         * @return array the result parsed<p>
-         * The format is:<br/>
-         * [
-         *  'type'=>$type,
-         *  'class'=>$class,
-         *  'function'=>$function,
-         *  'msg'=>$msg,
-         *  'steps'=>$steps
-         * ]<br/>
-         * <b>$type</b> is 'failure' or 'error'<br/>
-         * <b>$msg</b> is brief of issue<br/>
-         * <b>$steps</b> is detail of issue description<br/>
-         * </p>
+         * @return boolean true if it success, false when failed.
          */
         public function parse($resultFile)
         {
             $log = \ZKit\console\utility\LogConsole::getInstance();
             $log->debug('Found a file: ' . $resultFile);
 
-            $data = array();
+            $rs = false;
+            $this->data = array();
             $reader = new \XMLReader();
             $reader->open($resultFile, 'UTF-8');
             $step = REPORT_PARSER_START;
@@ -51,15 +41,16 @@ namespace ZKit\ATUI {
                     continue;
                 }
 
-                $this->findIssue($reader, $data, $step);
+                $this->findIssue($reader, $this->data, $step);
 
                 if (REPORT_PARSER_DONE === $step) {
                     $log->info('Found an issue in ' . $resultFile);
+                    $rs = true;
                     break;
                 }
             }
             $reader->close();
-            return $data;
+            return $rs;
         }
 
         private function findDescription($reader, &$data)
@@ -109,6 +100,16 @@ namespace ZKit\ATUI {
             $log->debug('position---->' . $pos);
             $log->debug('total message: ' . $message);
             return substr($message, 0, $pos > 250 - $lenCost ? (250 - $lenCost) : $pos);
+        }
+
+        public function getTitle()
+        {
+            return $this->data['type'] . ':' . $this->data['class'] . '.' . $this->data['function'] . '-' . $this->data['msg'];
+        }
+
+        public function getSteps()
+        {
+            return array_key_exists('steps', $this->data) ? $this->data['steps'] : '';
         }
 
     }

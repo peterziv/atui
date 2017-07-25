@@ -77,16 +77,13 @@ namespace ZKit\ATUI {
         private function report($file)
         {
             $p = new JUnitParser;
-            $rs = $p->parse($file);
-            if (array_key_exists('msg', $rs)) {
+            if ($p->parse($file)) {
                 $result = $this->loader->bug;
 
-                $result['title'] = $rs['type'] . ':' . $rs['class'] . '.' . $rs['function'] . '-' . $rs['msg'];
+                $result['title'] = $p->getTitle();
                 $this->log->info($result['title']);
-                if (array_key_exists('steps', $rs)) {
-                    $result['steps'] = $rs['steps'];
-                    $this->log->debug($result['steps']);
-                }
+                $result['steps'] = $p->getSteps();
+                $this->log->debug($result['steps']);
                 $this->bug($result);
             }
         }
