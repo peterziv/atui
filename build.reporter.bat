@@ -8,9 +8,8 @@ echo -----------------------------------
 
 set root=%~dp0
 set app=reporter
-set version=1.0.alpha2
 
-set package=%app%-%version%.phar
+set package=%app%.phar
 php tools\zphar-1.0.1.phar --dir src\reporter --name %package% --default Report.php
 
 echo [INFO] Waiting for some time to repare application...
