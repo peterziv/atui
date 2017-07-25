@@ -12,7 +12,7 @@ namespace ZKit\ATUI {
     require_once __DIR__ . '/JUnitParser.php';
     require_once __DIR__ . '/Zentao.php';
 
-    class HandleJUnit extends \ZKit\console\utility\Dir
+    class IssueHandler extends \ZKit\console\utility\Dir
     {
 
         private $loader = null;
