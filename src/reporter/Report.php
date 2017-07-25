@@ -3,12 +3,15 @@
 /**
  * ATUI
  * @author Peter (peter.ziv@hotmail.com)
+ * @license https://github.com/peterziv/atui/blob/master/LICENSE Apache License 2.0
  * @date July 15, 2017
  * @version 1.0.0
  */
 
 require_once(__DIR__ . '/HandleJUnit.php');
-define('REPORTER_VERSION', '1.0-alpha.2');
+
+//define('APP_DEBUG', true);
+define('REPORTER_VERSION', '1.0-alpha3');
 
 $log = new \ZKit\console\utility\LogConsole();
 $log->setDateShow(false);
@@ -18,7 +21,12 @@ $log->println('# Auto report the issue to the tracker');
 $log->println('# Author: peter<peter.ziv@hotmail.com> ');
 $log->println();
 $log->setDateShow(true);
-//define('APP_DEBUG', true);
+
 $p = new \ZKit\ATUI\HandleJUnit();
 $p->findUnderFolder();
-$log->info('Totally reported ' . $p->getIusseCount() . ' issue(s)!');
+if ($p->getIusseCount() > 0) {
+    $log->info('Totally reported ' . $p->getIusseCount . ' issues!');
+} else {
+    $log->info('No issue found!');
+}
+$log->println();
