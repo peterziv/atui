@@ -20,6 +20,23 @@ namespace ZKit\ATUI {
     class JUnitParser
     {
 
+        /**
+         * parse the result file for issues.
+         * @param string $resultFile the file with path
+         * @return array the result parsed<p>
+         * The format is:<br/>
+         * [
+         *  'type'=>$type,
+         *  'class'=>$class,
+         *  'function'=>$function,
+         *  'msg'=>$msg,
+         *  'steps'=>$steps
+         * ]<br/>
+         * <b>$type</b> is 'failure' or 'error'<br/>
+         * <b>$msg</b> is brief of issue<br/>
+         * <b>$steps</b> is detail of issue description<br/>
+         * </p>
+         */
         public function parse($resultFile)
         {
             $log = \ZKit\console\utility\LogConsole::getInstance();
@@ -72,14 +89,26 @@ namespace ZKit\ATUI {
                 case 'failure':
                     if (REPORT_PARSER_TESTCASE_FOUND === $step) {
                         $data['type'] = $reader->name;
-                        $msg = $reader->getAttribute('message');
-                        $pos = strpos($msg, '(Session');
-                        $data['msg'] = (false === $pos ? $msg : preg_replace("/([\s]{2,})/", '', substr($msg, 0, $pos)));
+                        $data['msg'] = $this->handleMsg($reader->getAttribute('message'), strlen($data['type']) + strlen($data['class']) + strlen($data['function']));
                         $this->findDescription($reader, $data);
                         $step = REPORT_PARSER_DONE;
                     }
                     break;
             }
+        }
+
+        private function handleMsg($message, $lenCost)
+        {
+            $log = \ZKit\console\utility\LogConsole::getInstance();
+            $log->debug('original message: ' . $message);
+            $pos = strpos($message, "\n");
+            if (false === $pos) {
+                $pos = 250;
+                $log->warning('NOT find &#10;');
+            }
+            $log->debug('position---->' . $pos);
+            $log->debug('total message: ' . $message);
+            return substr($message, 0, $pos > 250 - $lenCost ? (250 - $lenCost) : $pos);
         }
 
     }
